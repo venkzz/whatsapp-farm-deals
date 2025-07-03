@@ -67,6 +67,7 @@
   <input type="number" id="quantity" placeholder="Quantity (kg)" min="1" required />
   <input type="number" id="price" placeholder="Price per kg (₹)" min="1" required />
   <input type="text" id="location" placeholder="Pickup Location" required />
+  <input type="tel" id="farmerPhone" placeholder="Farmer WhatsApp Number (e.g. 919876543210)" pattern="[0-9]{10,15}" required />
 
   <button onclick="shareDeal()">📤 Share Deal on WhatsApp</button>
 
@@ -80,13 +81,19 @@
       const quantity = document.getElementById('quantity').value.trim();
       const price = document.getElementById('price').value.trim();
       const location = document.getElementById('location').value.trim();
+      let farmerPhone = document.getElementById('farmerPhone').value.trim();
 
-      if (!produce || !quantity || !price || !location) {
-        alert('Please fill out all fields before sharing.');
+      if (!produce || !quantity || !price || !location || !farmerPhone) {
+        alert('Please fill out all fields including the farmer phone number.');
         return;
       }
 
-      const message = `📢 *Fresh Produce Deal!*\n\n🧑‍🌾 Product: ${produce}\n📦 Quantity: ${quantity} kg\n💰 Price: ₹${price}/kg\n📍 Pickup Location: ${location}\n\nReply here if interested!`;
+      // Clean phone number: remove non-digit characters
+      farmerPhone = farmerPhone.replace(/\D/g, '');
+
+      const contactLink = `https://wa.me/${farmerPhone}?text=${encodeURIComponent("Hi, I'm interested in your produce deal!")}`;
+
+      const message = `📢 *Fresh Produce Deal!*\n\n🧑‍🌾 Product: ${produce}\n📦 Quantity: ${quantity} kg\n💰 Price: ₹${price}/kg\n📍 Pickup Location: ${location}\n\nInterested buyers can contact farmer directly:\n${contactLink}`;
 
       const encodedMessage = encodeURIComponent(message);
       const whatsappUrl = `https://wa.me/?text=${encodedMessage}`;
