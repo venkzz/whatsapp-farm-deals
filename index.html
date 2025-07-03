@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Post a Farm Produce Deal</title>
+  <style>
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen,
+        Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+      max-width: 420px;
+      margin: 30px auto;
+      padding: 20px;
+      background: #f9f9f9;
+      color: #333;
+    }
+    h1 {
+      text-align: center;
+      color: #25d366;
+      margin-bottom: 20px;
+    }
+    input {
+      width: 100%;
+      padding: 12px 15px;
+      margin: 10px 0;
+      border: 1px solid #ddd;
+      border-radius: 6px;
+      font-size: 16px;
+      box-sizing: border-box;
+      transition: border-color 0.3s;
+    }
+    input:focus {
+      border-color: #25d366;
+      outline: none;
+    }
+    button {
+      width: 100%;
+      padding: 14px 0;
+      margin-top: 20px;
+      background-color: #25d366;
+      color: white;
+      font-size: 18px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+    button:hover {
+      background-color: #1ebe57;
+    }
+    footer {
+      margin-top: 30px;
+      font-size: 14px;
+      color: #555;
+      text-align: center;
+    }
+    footer a {
+      color: #25d366;
+      text-decoration: none;
+    }
+  </style>
+</head>
+<body>
+  <h1>🧑‍🌾 Post a Farm Produce Deal</h1>
+
+  <input type="text" id="produce" placeholder="Produce (e.g. Tomatoes)" required />
+  <input type="number" id="quantity" placeholder="Quantity (kg)" min="1" required />
+  <input type="number" id="price" placeholder="Price per kg (₹)" min="1" required />
+  <input type="text" id="location" placeholder="Pickup Location" required />
+
+  <button onclick="shareDeal()">📤 Share Deal on WhatsApp</button>
+
+  <footer>
+    <p>Need help? Join our <a href="https://chat.whatsapp.com/your-group-link" target="_blank" rel="noopener">WhatsApp support group</a></p>
+  </footer>
+
+  <script>
+    function shareDeal() {
+      const produce = document.getElementById('produce').value.trim();
+      const quantity = document.getElementById('quantity').value.trim();
+      const price = document.getElementById('price').value.trim();
+      const location = document.getElementById('location').value.trim();
+
+      if (!produce || !quantity || !price || !location) {
+        alert('Please fill out all fields before sharing.');
+        return;
+      }
+
+      const message = `📢 *Fresh Produce Deal!*\n\n🧑‍🌾 Product: ${produce}\n📦 Quantity: ${quantity} kg\n💰 Price: ₹${price}/kg\n📍 Pickup Location: ${location}\n\nReply here if interested!`;
+
+      const encodedMessage = encodeURIComponent(message);
+      const whatsappUrl = `https://wa.me/?text=${encodedMessage}`;
+
+      window.open(whatsappUrl, '_blank');
+    }
+  </script>
+</body>
+</html>
